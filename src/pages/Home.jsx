@@ -1,6 +1,54 @@
+import React, { useState } from "react";
 import Select from "../components/Select";
+import SelectWindow from "../components/SelectWindow";
 
 function Home() {
+  const [uni, setUni] = useState(false); 
+  const onClickuni = () => {
+    setUni(true);
+  };
+  const [major, setMajor] = useState(false);
+  const onClickmajor = () => {
+    setMajor(true);
+  };
+  const [professor, setProfessor] = useState(false);
+  const onClickprofessor = () => {
+    setProfessor(true);
+  };
+  const [course, setCourse] = useState(false);
+  const onClickcourse = () => {
+    setCourse(true);
+  };
+  const universities = [
+    "خلیج فارس ",
+    "تهران",
+    "شیراز ",
+   "اصفهان",
+    "صنعتی شریف",
+    "علم و صنعت ایران",
+    "صنعتی امیرکبیر",
+    "شهید بهشتی",
+    "شیراز",
+    "فردوسی مشهد",
+    "تبریز",
+    "صنعتی اصفهان",
+    "علامه طباطبایی",
+    "خواجه نصیرالدین طوسی",
+    "بوعلی سینا",
+    "گیلان",
+    "مازندران",
+    "الزهرا",
+    "یزد",
+    "رازی کرمانشاه",
+    "چمران اهواز",
+    "زنجان",
+    "کردستان",
+
+  ];
+  const majors = ["کامپیوتر", "مکانیک", "شیمی", "عمران", "دریا", "معماری", "شهرسازی", "نفت"];
+  const courses = ["طراحی الگوریتم", "ساختمان داده", "مدار منطقی", "داده کاوی", "معماری کامپیوتر", "سیستم عامل", "شبکه", "نظریه زبان ها و ماشین"];
+  const professors = ["گل حبیب", "گل سعید", " گل ابی", "بانو رضوان", "عمو سجاد", "دویی امین"];
+
   return (
     <>
       <div className="bg-bg-color w-full h-screen">
@@ -48,16 +96,58 @@ function Home() {
           <Select
             icon="src/icons/hugeicons_university.svg"
             name="نام دانشگاه"
+            onClick={onClickuni}
           />
+
+          {uni && (
+            <div className="fixed inset-0 flex justify-center items-center ">
+              <div className="bg-custom-white  rounded-lg shadow-lg w-[283px] h-[463px]">
+                <SelectWindow
+                  name={universities}
+                  setPopup={setUni}
+                />
+              </div>
+            </div>
+          )}
+
           <Select
             icon="src/icons/ph_graduation-cap-light.svg"
             name="نام رشته"
+            onClick={onClickmajor}
           />
+          {major && (
+            <div className="fixed inset-0 flex justify-center items-center">
+              <div className="bg-custom-white  rounded-lg shadow-lg w-[283px] h-[463px]">
+                <SelectWindow name={majors} setPopup={setMajor} />
+              </div>
+            </div>
+          )}
           <Select
             icon="src/icons/emojione-monotone_orange-book.svg"
             name="نام درس"
+            onClick={onClickcourse}
           />
-          <Select icon="src/icons/hugeicons_teacher.svg" name="نام استاد" />
+          {course && (
+            <div className="fixed inset-0 flex justify-center items-center ">
+              <div className="bg-custom-white  rounded-lg shadow-lg w-[283px] h-[463px]">
+                <SelectWindow
+                  name={courses}
+                  setPopup={setCourse}
+                />
+              </div>
+            </div>
+          )}
+          <Select icon="src/icons/hugeicons_teacher.svg" name="نام استاد" onClick={onClickprofessor} />
+          {professor && (
+            <div className="fixed inset-0 flex justify-center items-center ">
+              <div className="bg-custom-white  rounded-lg shadow-lg w-[283px] h-[463px]">
+                <SelectWindow
+                  name={professors}
+                  setPopup={setProfessor}
+                />
+              </div>
+            </div>
+          )}
           <Select icon="src/icons/clarity_date-line.svg" name="تاریخ" />
         </div>
         <img

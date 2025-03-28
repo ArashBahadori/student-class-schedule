@@ -17,9 +17,7 @@ function Select(props) {
             {props.name}
           </label>
         </div>
-        <select name="" id="" className="text-custom-white ml-4">
-          <option value=""></option>
-        </select>
+        <button onClick={props.onClick} className="text-custom-white ml-4"><img src="src/icons/arrow-down.svg" alt="arrow-down" className="w-6 h-6" /></button>
       </div>
     </>
   );
