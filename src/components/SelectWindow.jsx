@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Selector from "./Selector";
 
-function SelectWindow(props) {  
-  
+function SelectWindow(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOptions, setFilteredOptions] = useState(props.name);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-        const filtered = props.name.filter((uni) => {
-          return uni?.includes(searchTerm);
-        });
-        setFilteredOptions(filtered);
+      const filtered = props.name.filter((uni) => {
+        return uni?.includes(searchTerm);
+      });
+      setFilteredOptions(filtered);
     }, 300);
-    
-    return () => clearTimeout(timer);
 
-  }, [searchTerm, props.name])
+    return () => clearTimeout(timer);
+  }, [searchTerm, props.name]);
 
   return (
     <>
@@ -35,7 +33,7 @@ function SelectWindow(props) {
         />
       </div>
       <div className="mt-3">
-        <Selector options= {filteredOptions} setPopup={props.setPopup}/>
+        <Selector options={filteredOptions} setPopup={props.setPopup} />
       </div>
     </>
   );

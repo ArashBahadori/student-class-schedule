@@ -4,9 +4,11 @@ function Selector(props) {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelect = (option) => {
-    if (selectedItems.includes(option))
-      setSelectedItems(selectedItems.filter((items) => items !== option));
-    else setSelectedItems([...selectedItems, option]);
+    if (selectedItems.includes(option)) {
+      setSelectedItems(selectedItems.filter((item) => item !== option));
+    } else {
+      setSelectedItems([...selectedItems, option]);
+    }
   };
 
   return (
@@ -15,24 +17,21 @@ function Selector(props) {
         <ul className="space-y-7">
           {props.options?.map((option, index) => (
             <li key={index} className="flex justify-between items-center">
-              <label className=" text-custom-blue">{option}</label>
-              <input
-                type="checkbox"
-                name="selectOption"
-                className="hidden peer"
-                value={option}
-                id={option}
-                checked={selectedItems.includes(option)}
-                onChange={() => handleSelect(option)}
-              />
+              <label className="text-custom-blue">{option}</label>
+
               <span
-                className="w-4 h-4 border-2 border-custom-blue rounded-full block peer-checked:bg-blue-200 transition-all ml-2 cursor-pointer"
+                className="w-4 h-4 rounded-full border-2 border-custom-blue flex items-center justify-center cursor-pointer ml-1"
                 onClick={() => handleSelect(option)}
-              ></span>
+              >
+                {selectedItems.includes(option) && (
+                  <span className="w-2 h-2 bg-custom-blue rounded-full"></span>
+                )}
+              </span>
             </li>
           ))}
         </ul>
       </div>
+
       <div className="fixed bg-custom-white h-8 mt-90 mr-27">
         <button
           onClick={() => props.setPopup(false)}
