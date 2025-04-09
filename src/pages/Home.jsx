@@ -28,7 +28,7 @@ function Home() {
     uni: [
       "خلیج فارس ",
       "تهران",
-      "شیراز ",
+      " صنعتی شیراز ",
       "اصفهان",
       "صنعتی شریف",
       "علم و صنعت ایران",
@@ -80,7 +80,7 @@ function Home() {
     ],
   };
   return (
-    <div className="bg-bg-color w-full h-screen">
+    <div className="bg-bg-color w-full h-screen ">
       <div className="absolute">
         <img
           src="src/icons/vector 12.svg"
