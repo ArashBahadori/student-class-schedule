@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Loading from "../components/Loading";
 
-export default function Result() {
+function Result() {
   const [courses, setCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -560,3 +560,4 @@ export default function Result() {
     `);
   }
 }
+export default Result;
