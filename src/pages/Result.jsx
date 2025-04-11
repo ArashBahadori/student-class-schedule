@@ -31,24 +31,24 @@ function Result() {
   return (
     <>
       <div className="bg-bg-color w-full h-screen relative">
-        <div className="absolute">
+      <div className="absolute">
           <img
-            src="/icons/vector 12.svg"
+            src="/icons/Vector 12.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-2"
           />
           <img
-            src="/icons/vector 9.svg"
+            src="/icons/Vector 9.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative right-60 top-20 "
           />
           <img
-            src="/icons/vector 10.svg"
+            src="/icons/Vector 10.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-100 right-15"
           />
           <img
-            src="/icons/vector 11.svg"
+            src="/icons/Vector 11.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-115 right-70"
           />
