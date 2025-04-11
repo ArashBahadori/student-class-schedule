@@ -27,7 +27,7 @@ function SelectWindow(props) {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <img
-          src="src/icons/search-normal.svg"
+          src="/icons/search-normal.svg"
           alt="search-icon"
           className="w-[14px] h-[14px] ml-4 my-auto"
         />

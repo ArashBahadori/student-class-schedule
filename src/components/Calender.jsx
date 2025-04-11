@@ -77,18 +77,18 @@ const Calendar = (props) => {
             onClick={() => handleMonthChange(-1)}
             className=" text-custom-blue text-sm cursor-pointer"
           >
-            <img src="src/icons/arrow-right.svg" alt="" />
+            <img src="/icons/arrow-right.svg" alt="" />
           </button>
           <button
             onClick={() => handleMonthChange(1)}
             className="  text-custom-blue text-sm cursor-pointer"
           >
-            <img src="src/icons/arrow-left.svg" alt="" />
+            <img src="/icons/arrow-left.svg" alt="" />
           </button>
         </div>
       </div>
       <img
-        src="src/icons/Rectangle 35.svg"
+        src="/icons/Rectangle 35.svg"
         alt="linear-gradient"
         className="mx-auto"
       />

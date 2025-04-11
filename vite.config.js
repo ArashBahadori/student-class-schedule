@@ -1,7 +1,12 @@
-import { defineConfig } from 'vite'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [ tailwindcss(),],
-})
+  plugins: [tailwindcss()],
+  // vite.config.js
+  server: {
+    proxy: {
+      "/api": "http://localhost:5000",
+    },
+  },
+});

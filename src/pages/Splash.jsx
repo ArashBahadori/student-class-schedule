@@ -8,22 +8,22 @@ import React from "react";
       <div className="bg-bg-color w-full h-screen">
         <div className="absolute">
           <img
-            src="src/icons/vector 12.svg"
+            src="/icons/vector 12.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-2"
           />
           <img
-            src="src/icons/vector 9.svg"
+            src="/icons/vector 9.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative right-60 top-20 "
           />
           <img
-            src="src/icons/vector 10.svg"
+            src="/icons/vector 10.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-100 right-15"
           />
           <img
-            src="src/icons/vector 11.svg"
+            src="/icons/vector 11.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-115 right-70"
           />
@@ -36,7 +36,7 @@ import React from "react";
         h-screen"
         >
           <img
-            src="src/icons/class-yar.svg"
+            src="/icons/class-yar.svg"
             alt="class-yar icon"
             className="h-[115.18px] w-[132.75px]"
           />

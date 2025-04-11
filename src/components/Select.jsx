@@ -20,7 +20,7 @@ function Select(props) {
         </div>
         <button onClick={props.onClick} className="text-custom-white ml-4">
           <img
-            src="src/icons/arrow-down.svg"
+            src="/icons/arrow-down.svg"
             alt="arrow-down"
             className="w-6 h-6"
           />

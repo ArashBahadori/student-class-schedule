@@ -7,11 +7,11 @@
 
   function Home({ fadeIn }) {
     const icons = {
-      uni: "src/icons/hugeicons_university.svg",
-      major: "src/icons/ph_graduation-cap-light.svg",
-      course: "src/icons/emojione-monotone_orange-book.svg",
-      professor: "src/icons/hugeicons_teacher.svg",
-      date: "src/icons/clarity_date-line.svg",
+      uni: "/icons/hugeicons_university.svg",
+      major: "/icons/ph_graduation-cap-light.svg",
+      course: "/icons/emojione-monotone_orange-book.svg",
+      professor: "/icons/hugeicons_teacher.svg",
+      date: "/icons/clarity_date-line.svg",
     };
 
     const navigate = useNavigate();
@@ -80,26 +80,26 @@
       ],
     };
     return (
-      <div className={`bg-bg-color w-full h-screen transition-opacity duration-700 ${fadeIn ? "opacity-100" : "opacity-0"}`}>
+      <div className={`bg-bg-color w-full h-screen transition-opacity duration-400 ${fadeIn ? "opacity-100" : "opacity-0"}`}>
 
         <div className="absolute">
           <img
-            src="src/icons/vector 12.svg"
+            src="/icons/vector 12.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-2"
           />
           <img
-            src="src/icons/vector 9.svg"
+            src="/icons/vector 9.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative right-60 top-20"
           />
           <img
-            src="src/icons/vector 10.svg"
+            src="/icons/vector 10.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-100 right-15"
           />
           <img
-            src="src/icons/vector 11.svg"
+            src="/icons/vector 11.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-115 right-70"
           />
@@ -108,7 +108,7 @@
         <div>
           <div className="flex space-x-2 mr-6 pt-16">
             <img
-              src="src/icons/class-yar.svg"
+              src="/icons/class-yar.svg"
               alt="class-yar icon"
               className="w-[42px] h-[38px]"
             />
@@ -119,7 +119,7 @@
           </p>
         </div>
         <img
-          src="src/icons/Rectangle 35.svg"
+          src="/icons/Rectangle 35.svg"
           alt="linear-gradient"
           className="mx-auto mt-10"
         />
@@ -134,7 +134,7 @@
             />
           ))}
           <Select
-            icon="src/icons/clarity_date-line.svg"
+            icon="/icons/clarity_date-line.svg"
             name="تاریخ"
             onClick={() => setShowCalendar(!showCalendar)}
           />
@@ -156,7 +156,7 @@
           </div>
         )}
         <img
-          src="src/icons/Rectangle 35.svg"
+          src="/icons/Rectangle 35.svg"
           alt="linear-gradient"
           className="mx-auto mt-10"
         />

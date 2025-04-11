@@ -7,10 +7,11 @@ function Result() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("/courses.json")
+    fetch("/api/home")
     .then((response) => {
         if (!response.ok) throw new Error("خطا در دریافت اطلاعات");
         return response.json();
@@ -23,7 +24,7 @@ function Result() {
         setError(err.message);
         setIsLoading(false);
       });
-  }, []);
+  }, [searchTerm]);
 
   if (isLoading) return <Loading />;
 
@@ -32,22 +33,22 @@ function Result() {
       <div className="bg-bg-color w-full h-screen relative">
         <div className="absolute">
           <img
-            src="src/icons/vector 12.svg"
+            src="/icons/vector 12.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-2"
           />
           <img
-            src="src/icons/vector 9.svg"
+            src="/icons/vector 9.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative right-60 top-20 "
           />
           <img
-            src="src/icons/vector 10.svg"
+            src="/icons/vector 10.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-100 right-15"
           />
           <img
-            src="src/icons/vector 11.svg"
+            src="/icons/vector 11.svg"
             alt=""
             className="h-[115.18px] w-[132.75px] opacity-5 relative top-115 right-70"
           />
@@ -55,7 +56,7 @@ function Result() {
         <div>
           <div className="flex space-x-2 mr-6 pt-16">
             <img
-              src="src/icons/class-yar.svg"
+              src="/icons/class-yar.svg"
               alt="class-yar icon"
               className="w-[42px] h-[38px]"
             />
@@ -70,7 +71,7 @@ function Result() {
           placeholder-custom-blue text-[16px] font-[500] placeholder:tracking-[0.4px] z-5"
           />
           <button className="pl-5 size-[50px] hover:cursor-pointer flex flex-row justify-center items-center">
-            <img src="src\icons\search-normal.svg" className="size-[20px]" />
+            <img src="/icons\search-normal.svg" className="size-[20px]" />
           </button>
         </div>
         <div className="h-[655px] w-94  bg-[#F3F3EE] shadow-slate-600 shadow-md  mx-auto mt-[20px] rounded-md scale-z-200 overflow-auto">
@@ -87,7 +88,7 @@ function Result() {
                   رشته
                 </th>
                 <th className="py-3 px-4 pt-4 basis-1/7">
-                  <img src="src/icons/dots.svg" />
+                  <img src="/icons/dots.svg" />
                 </th>
               </tr>
             </thead>
@@ -107,7 +108,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -126,7 +127,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -145,7 +146,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -164,7 +165,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -183,7 +184,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -202,7 +203,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -221,7 +222,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -240,7 +241,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -259,7 +260,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -278,7 +279,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -297,7 +298,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -316,7 +317,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -335,7 +336,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -354,7 +355,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -373,7 +374,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -392,7 +393,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -411,7 +412,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -430,7 +431,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -449,7 +450,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -468,7 +469,7 @@ function Result() {
                     className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
                     onClick={() => setShowModal(true)}
                   >
-                    <img src="src/icons/wDots.svg" />
+                    <img src="/icons/wDots.svg" />
                   </button>
                 </th>
               </tr>
@@ -483,7 +484,7 @@ function Result() {
           <div className="h-[510px] w-88 mt-52 mx-auto flex items-center justify-center rounded-[6px] bg-[#F3F3EE]">
             <div>
               <button onClick={() => setShowModal(false)} className="mt-3">
-                <img src="src/icons/close.svg" />
+                <img src="/icons/close.svg" />
               </button>
               <div className="*:odd:bg-[#F3F3EE] *:even:bg-[#EAE8E1]">
                 <div className="h-[65px] w-80 rounded-[4px] flex flex-row items-center">
