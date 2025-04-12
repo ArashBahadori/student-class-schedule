@@ -17,6 +17,12 @@ function Home({ fadeIn }) {
   const navigate = useNavigate();
   const [popupType, setPopupType] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedItems, setSelectedItems] = useState({
+    uni: "",
+    major: "",
+    course: "",
+    professor: "",
+  });
 
   const names = {
     uni: "نام دانشگاه",
@@ -153,7 +159,12 @@ function Home({ fadeIn }) {
           <div className="bg-custom-white rounded-lg shadow-lg w-[283px] h-[463px]">
             <SelectWindow
               name={data[popupType]}
+              selectedValue={selectedItems[popupType]}
+              onSelect={(value) =>
+                setSelectedItems((prev) => ({ ...prev, [popupType]: value }))
+              }
               setPopup={() => setPopupType(null)}
+              
             />
           </div>
         </div>

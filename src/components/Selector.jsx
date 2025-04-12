@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Selector(props) {
-  const [selectedItems, setSelectedItems] = useState([]);
-
   const handleSelect = (option) => {
-    if (selectedItems.includes(option)) {
-      setSelectedItems(selectedItems.filter((item) => item !== option));
+    if (props.selectedValue.includes(option)) {
+      props.onSelect(props.selectedValue.filter((item) => item !== option));
     } else {
-      setSelectedItems([...selectedItems, option]);
+      props.onSelect([...props.selectedValue, option]);
     }
   };
 
@@ -18,12 +16,12 @@ function Selector(props) {
           {props.options?.map((option, index) => (
             <li key={index} className="flex justify-between items-center">
               <label className="text-custom-blue">{option}</label>
-
+              
               <span
                 className="w-4 h-4 rounded-full border-2 border-custom-blue flex items-center justify-center cursor-pointer ml-1"
                 onClick={() => handleSelect(option)}
               >
-                {selectedItems.includes(option) && (
+                {props.selectedValue.includes(option) && (
                   <span className="w-2 h-2 bg-custom-blue rounded-full"></span>
                 )}
               </span>

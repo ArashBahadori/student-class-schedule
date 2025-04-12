@@ -33,7 +33,7 @@ function SelectWindow(props) {
         />
       </div>
       <div className="mt-3">
-        <Selector options={filteredOptions} setPopup={props.setPopup} />
+        <Selector options={filteredOptions} setPopup={props.setPopup} onSelect={props.onSelect} selectedValue={props.selectedValue}/>
       </div>
     </>
   );
