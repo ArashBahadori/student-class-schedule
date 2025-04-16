@@ -14,7 +14,7 @@ export default function App() {
     }, 2000);
     const unmountTimer = setTimeout(() => {
       setShowSplash(false);
-    }, 2700);
+    }, 2500);
     return () => {
       clearTimeout(timer);
       clearTimeout(unmountTimer);

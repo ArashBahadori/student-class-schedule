@@ -3,14 +3,22 @@ import Selector from "./Selector";
 
 function SelectWindow(props) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState(props.name);
+  const [filteredOptions, setFilteredOptions] = useState([]);
 
+  // Update filteredOptions when props.name changes (e.g., after data is fetched)
+  useEffect(() => {
+    setFilteredOptions(props.name || []);
+  }, [props.name]);
+
+  // Filter options based on the search term
   useEffect(() => {
     const timer = setTimeout(() => {
-      const filtered = props.name.filter((uni) => {
-        return uni?.includes(searchTerm);
-      });
-      setFilteredOptions(filtered);
+      if (props.name) {
+        const filtered = props.name.filter((option) =>
+          option?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredOptions(filtered);
+      }
     }, 300);
 
     return () => clearTimeout(timer);
@@ -33,9 +41,15 @@ function SelectWindow(props) {
         />
       </div>
       <div className="mt-3">
-        <Selector options={filteredOptions} setPopup={props.setPopup} onSelect={props.onSelect} selectedValue={props.selectedValue}/>
+        <Selector
+          options={filteredOptions}
+          setPopup={props.setPopup}
+          onSelect={props.onSelect}
+          selectedValue={props.selectedValue}
+        />
       </div>
     </>
   );
 }
+
 export default SelectWindow;

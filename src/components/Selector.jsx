@@ -29,7 +29,6 @@ function Selector(props) {
           ))}
         </ul>
       </div>
-
       <div className="fixed bg-custom-white h-8 mt-90 mr-27">
         <button
           onClick={() => props.setPopup(false)}

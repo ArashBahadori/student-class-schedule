@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "../components/Select";
 import SelectWindow from "../components/SelectWindow";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import Calendar from "../components/Calender";
+import axios from "axios";
 
 function Home({ fadeIn }) {
   const icons = {
@@ -11,79 +12,50 @@ function Home({ fadeIn }) {
     major: "/icons/ph_graduation-cap-light.svg",
     course: "/icons/emojione-monotone_orange-book.svg",
     professor: "/icons/hugeicons_teacher.svg",
-    date: "/icons/clarity_date-line.svg",
   };
 
   const navigate = useNavigate();
   const [popupType, setPopupType] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedItems, setSelectedItems] = useState({
-    uni: "",
-    major: "",
-    course: "",
-    professor: "",
+    uni: [],
+    major: [],
+    course: [],
+    professor: [],
   });
-
+  const [data, setData] = useState({
+    uni: [],
+    major: [],
+    course: [],
+    professor: [],
+  });
   const names = {
     uni: "نام دانشگاه",
     major: "نام رشته",
     course: "نام درس",
     professor: "نام استاد",
   };
-  const data = {
-    uni: [
-      "خلیج فارس ",
-      "تهران",
-      " صنعتی شیراز ",
-      "اصفهان",
-      "صنعتی شریف",
-      "علم و صنعت ایران",
-      "صنعتی امیرکبیر",
-      "شهید بهشتی",
-      "شیراز",
-      "فردوسی مشهد",
-      "تبریز",
-      "صنعتی اصفهان",
-      "علامه طباطبایی",
-      "خواجه نصیرالدین طوسی",
-      "بوعلی سینا",
-      "گیلان",
-      "مازندران",
-      "الزهرا",
-      "یزد",
-      "رازی کرمانشاه",
-      "چمران اهواز",
-      "زنجان",
-      "کردستان",
-    ],
-    major: [
-      "کامپیوتر",
-      "مکانیک",
-      "شیمی",
-      "عمران",
-      "دریا",
-      "معماری",
-      "شهرسازی",
-      "نفت",
-    ],
-    course: [
-      "طراحی الگوریتم",
-      "ساختمان داده",
-      "مدار منطقی",
-      "داده کاوی",
-      "معماری کامپیوتر",
-      "سیستم عامل",
-      "شبکه",
-      "نظریه زبان ها و ماشین",
-    ],
-    professor: [
-      "گل حبیب",
-      "گل سعید",
-      "گل ابی",
-      "بانو رضوان",
-      "عمو سجاد",
-      "دویی امین",
-    ],
+  useEffect(() => {
+    axios
+      .get("/api/home")
+      .then((response) => {
+        const fetchedData = response.data;
+        setData({
+          uni: fetchedData?.map((item) => item.university),
+          major: fetchedData?.map((item) => item.major),
+          course: fetchedData?.map((item) => item.courseName),
+          professor: fetchedData?.map((item) => item.courseProf),
+        });
+      })
+      .catch((err) => {
+        console.error("Data not fetched", err);
+      });
+  }, []);
+
+  const closePopup = (event) => {
+    if (event.target === event.currentTarget) {
+      setPopupType(null);
+    }
   };
   return (
     <div
@@ -148,14 +120,22 @@ function Home({ fadeIn }) {
           onClick={() => setShowCalendar(!showCalendar)}
         />
         {showCalendar && (
-          <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 flex items-center justify-center" onClick={(e) => {
+            // Check if the click is on the backdrop, not inside the calendar itself
+            if (e.target === e.currentTarget) {
+              setShowCalendar(false);
+            }
+          }}>
             <Calendar setPopup={() => setShowCalendar(false)} />
           </div>
         )}
       </div>
 
       {popupType && (
-        <div className="fixed inset-0 flex justify-center items-center">
+        <div
+          onClick={closePopup} // Added click event to close popup when clicked outside
+          className="fixed inset-0 flex justify-center items-center"
+        >
           <div className="bg-custom-white rounded-lg shadow-lg w-[283px] h-[463px]">
             <SelectWindow
               name={data[popupType]}
@@ -164,11 +144,11 @@ function Home({ fadeIn }) {
                 setSelectedItems((prev) => ({ ...prev, [popupType]: value }))
               }
               setPopup={() => setPopupType(null)}
-              
             />
           </div>
         </div>
       )}
+
       <img
         src="/icons/Rectangle 35.svg"
         alt="linear-gradient"
@@ -180,6 +160,7 @@ function Home({ fadeIn }) {
           onClick={() => {
             navigate("/result");
           }}
+          aria-label="Search for results"
         >
           جستجو
         </button>
@@ -187,4 +168,5 @@ function Home({ fadeIn }) {
     </div>
   );
 }
+
 export default Home;
