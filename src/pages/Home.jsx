@@ -15,6 +15,7 @@ function Home({ fadeIn }) {
   };
 
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [popupType, setPopupType] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedItems, setSelectedItems] = useState({
@@ -35,6 +36,58 @@ function Home({ fadeIn }) {
     course: "نام درس",
     professor: "نام استاد",
   };
+  const handleSelectedItems = () => {
+    const selectedItemsToSend = {};
+    Object.keys(selectedItems).forEach((item) => {
+      if (selectedItems[item].length == 0) {
+        const error = setTimeout(() => {
+          setError("پر کردن فیلد ها الزامی است");
+        }, 2000);
+        clearTimeout(error);
+      }
+      if (selectedItems[item] && selectedItems[item].length > 0) {
+        selectedItemsToSend[item] = selectedItems[item];
+      }
+    });
+    return selectedItemsToSend;
+  };
+  const handleSearch = async () => {
+    const newSelected = selectedItems;
+    newSelected.university = selectedItems.uni;
+    newSelected.courseName = selectedItems.course;
+    newSelected.courseProf = selectedItems.professor;
+    delete newSelected.uni;
+    delete newSelected.course;
+    delete newSelected.professor;
+
+    let test = "";
+    for (let key in newSelected) {
+      if (newSelected[key].length == 0) {
+        continue;
+      }
+      let query = key + "=";
+
+      newSelected[key].map((selected) => {
+        query += selected + ",";
+      });
+      test += query + "&";
+    }
+
+    const selected = handleSelectedItems();
+
+    const query = new URLSearchParams();
+    Object.entries(selected).forEach(([key, values]) => {
+      values.forEach((val) => query.append(key, val));
+    });
+
+    try {
+      const response = await axios.get(`/api/home?${test.toString()}`);
+      navigate("/result", { state: { filteredData: response.data }});
+    } catch (error) {
+      console.error("Error sending filters:", error);
+    }
+  };
+
   useEffect(() => {
     axios
       .get("/api/home")
@@ -120,12 +173,15 @@ function Home({ fadeIn }) {
           onClick={() => setShowCalendar(!showCalendar)}
         />
         {showCalendar && (
-          <div className="fixed inset-0 flex items-center justify-center" onClick={(e) => {
-            // Check if the click is on the backdrop, not inside the calendar itself
-            if (e.target === e.currentTarget) {
-              setShowCalendar(false);
-            }
-          }}>
+          <div
+            className="fixed inset-0 flex items-center justify-center"
+            onClick={(e) => {
+              // Check if the click is on the backdrop, not inside the calendar itself
+              if (e.target === e.currentTarget) {
+                setShowCalendar(false);
+              }
+            }}
+          >
             <Calendar setPopup={() => setShowCalendar(false)} />
           </div>
         )}
@@ -157,9 +213,7 @@ function Home({ fadeIn }) {
       <div className="flex justify-center">
         <button
           className="bg-custom-white text-custom-blue w-[161px] h-[44px] mt-15 shadow-sm shadow-custom-blue border border-custom-blue rounded-md font-bold"
-          onClick={() => {
-            navigate("/result");
-          }}
+          onClick={handleSearch}
           aria-label="Search for results"
         >
           جستجو

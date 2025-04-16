@@ -1,14 +1,13 @@
 import React from "react";
 
 function Selector(props) {
-  const handleSelect = (option) => {
+  const handleSelect = (option) => { // toggle function for multi-select behavior
     if (props.selectedValue.includes(option)) {
       props.onSelect(props.selectedValue.filter((item) => item !== option));
     } else {
       props.onSelect([...props.selectedValue, option]);
     }
-  };
-
+  };  
   return (
     <div className="relative h-full flex flex-col">
       <div className="flex-1 overflow-y-auto px-4 mt-4 max-h-[330px]">
