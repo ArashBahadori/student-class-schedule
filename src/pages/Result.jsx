@@ -1,37 +1,36 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Loading from "../components/Loading";
+import { useLocation } from "react-router-dom";
 
-function Result(props) {
+function Result() {
   const [courses, setCourses] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState(null);
+
+  const location = useLocation();
+  const { filteredData } = location.state || {};
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch("/api/home")
-    .then((response) => {
-        if (!response.ok) throw new Error("خطا در دریافت اطلاعات");
-        return response.json();
-      })
-      .then((data) => {
-        setCourses(data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setIsLoading(false);
-      });
-  }, [searchTerm]);
+    if (filteredData) {
+      setCourses(filteredData);
+    }
+  }, [filteredData]);
 
-  if (isLoading) return <Loading />;
-
+  const filteredCourses = courses.filter((course) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      course.courseName?.toLowerCase().includes(term) ||
+      course.courseProf?.toLowerCase().includes(term) ||
+      course.major?.toLowerCase().includes(term) ||
+      course.university?.toLowerCase().includes(term)
+    );
+  });
   return (
     <>
-      <div className="bg-bg-color w-full h-screen relative">
-      <div className="absolute">
+      <div className="bg-bg-color w-full h-screen relative ">
+        <div className="absolute">
           <img
             src="/icons/Vector 12.svg"
             alt=""
@@ -67,13 +66,16 @@ function Result(props) {
           <input
             type="text"
             placeholder="جستجو..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="mr-5 border-none focus:outline-none 
           placeholder-custom-blue text-[16px] font-[500] placeholder:tracking-[0.4px] z-5"
           />
           <button className="pl-5 size-[50px] hover:cursor-pointer flex flex-row justify-center items-center">
-            <img src="/icons\search-normal.svg" className="size-[20px]"/>
+            <img src="/icons\search-normal.svg" className="size-[20px]" />
           </button>
         </div>
+
         <div className="h-[655px] w-94  bg-[#F3F3EE] shadow-slate-600 shadow-md  mx-auto mt-[20px] rounded-md scale-z-200 overflow-auto">
           <table className="w-90 mx-auto ">
             <thead className="sticky top-0 bg-[#F3F3EE]">
@@ -93,26 +95,38 @@ function Result(props) {
               </tr>
             </thead>
             <tbody className="*:even:bg-[#F3F3EE] *:odd:bg-bg-color **:truncate *:rounded-[4px]">
-              <tr className=" text-right flex flex-row items-center justify-center h-[60px]">
-                <th className="py-3 px-4 text-[15px] font-[450] text-custom-blue basis-2/7">
-                  
-                </th>
-                <th className="py-3 px-4 text-[15px] font-[450] text-custom-blue basis-2/7">
-                 
-                </th>
-                <th className="py-3 px-4 text-[15px] font-[450] text-custom-blue basis-2/7">
-                  
-                </th>
-                <th className="basis-1/7 py-2">
-                  <button
-                    className=" shadow-slate-600 shadow-md  mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
-                    onClick={() => setShowModal(true)}
-                  >
-                    <img src="/icons/wDots.svg" />
-                  </button>
-                </th>
-              </tr>
-              
+              {filteredCourses.map((course, index) => (
+                <tr
+                  key={index}
+                  className="text-right flex flex-row items-center justify-center h-[60px]"
+                >
+                  <td className="py-3 px-4 text-[15px] font-[450] text-custom-blue basis-2/7">
+                    {course.courseName}
+                  </td>
+                  <td className="py-3 px-4 text-[15px] font-[450] text-custom-blue basis-2/7">
+                    {course.courseProf}
+                  </td>
+                  <td className="py-3 px-4 text-[15px] font-[450] text-custom-blue basis-2/7">
+                    {course.major}
+                  </td>
+                  <td className="basis-1/7 py-2">
+                    <button
+                      className="shadow-slate-600 shadow-md mx-auto h-[20px] w-[37px] rounded-[5px] bg-custom-blue flex flex-row items-center justify-center border border-[#F3F2EE]"
+                      onClick={() => {
+                        setSelectedCourse(course); // set the clicked course
+                        setShowModal(true); // show the modal
+                      }}
+                    >
+                      <img src="/icons/wDots.svg" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {filteredCourses.length === 0 && (
+                <p className="text-center py-6 text-custom-blue">
+                  هیچ نتیجه‌ای یافت نشد 😔
+                </p>
+              )}
             </tbody>
           </table>
         </div>
@@ -121,84 +135,56 @@ function Result(props) {
             showModal ? "" : "hidden"
           }`}
         >
-          <div className="h-[510px] w-88 mt-52 mx-auto flex items-center justify-center rounded-[6px] bg-[#F3F3EE]">
+          <div className="h-[504px] w-[353px] mt-52 mx-auto flex items-center justify-center rounded-[6px] bg-[#F3F3EE]">
             <div>
               <button onClick={() => setShowModal(false)} className="mt-3">
                 <img src="/icons/close.svg" />
               </button>
-              <div className="*:odd:bg-[#F3F3EE] *:even:bg-[#EAE8E1]">
-                <div className="h-[65px] w-80 rounded-[4px] flex flex-row items-center">
-                  <h1 className="text-[16px] font-[700] mr-3 text-custom-blue basis-1/2">
-                    نام درس
-                  </h1>
-                  <h1 className="text-[16px] font-[450] mr-3 text-custom-blue basis-1/2">
-                    طراحی الگوریتم
-                  </h1>
+              {showModal && (
+                <div className="fixed inset-0  bg-black/50 z-50 flex items-center justify-center px-4">
+                  <div className="bg-[#F3F3EE] h-[504px] w-[353px] max-w-md rounded-md overflow-y-auto max-h-[90vh] p-4">
+                    <button
+                      onClick={() => setShowModal(false)}
+                      className="mb-2"
+                    >
+                      <img src="/icons/close.svg" alt="close" />
+                    </button>
+                    {selectedCourse && (
+                      <div className="space-y-2">
+                        {[
+                          ["نام درس", selectedCourse.courseName],
+                          ["نام استاد", selectedCourse.courseProf],
+                          ["کد درس", selectedCourse.courseCode],
+                          ["نام رشته", selectedCourse.major],
+                          ["تاریخ", selectedCourse.date],
+                          ["ساعت", selectedCourse.time],
+                          ["وضعیت", selectedCourse.status],
+                          ["دانشگاه", selectedCourse.university],
+                        ].map(([label, value], i) => (
+                          <div
+                            key={i}
+                            className={`flex justify-between items-center p-3 rounded ${
+                              i % 2 === 0 ? "bg-[#EAE8E1]" : "bg-[#F3F3EE]"
+                            }`}
+                          >
+                            <span className="text-sm font-bold text-custom-blue">
+                              {label}
+                            </span>
+                            <span className="text-sm font-normal text-custom-blue">
+                              {value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="h-[65px] w-80 rounded-[4px] flex flex-row items-center">
-                  <h1 className="text-[16px] font-[700] mr-3 text-custom-blue basis-1/2">
-                    نام استاد
-                  </h1>
-                  <h1 className="text-[16px] font-[450] mr-3 text-custom-blue basis-1/2">
-                    رستمی
-                  </h1>
-                </div>
-
-                <div className="h-[65px] w-80 rounded-[4px] flex flex-row items-center">
-                  <h1 className="text-[16px] font-[700] mr-3 text-custom-blue basis-1/2">
-                    کد درس
-                  </h1>
-                  <h1 className="text-[16px] font-[450] mr-3 text-custom-blue basis-1/2">
-                    123456
-                  </h1>
-                </div>
-                <div className="h-[65px] w-80 rounded-[4px] flex flex-row items-center">
-                  <h1 className="text-[16px] font-[700] mr-3 text-custom-blue basis-1/2">
-                    نام رشته
-                  </h1>
-                  <h1 className="text-[16px] font-[450] mr-3 text-custom-blue basis-1/2">
-                    کامپیوتر
-                  </h1>
-                </div>
-                <div className="h-[65px] w-80 rounded-[4px] flex flex-row items-center">
-                  <h1 className="text-[16px] font-[700] mr-3 text-custom-blue basis-1/2">
-                    تاریخ
-                  </h1>
-                  <h1 className="text-[16px] font-[450] mr-3 text-custom-blue basis-1/2">
-                    03/12/15
-                  </h1>
-                </div>
-                <div className="h-[65px] w-80 rounded-[4px] flex flex-row items-center">
-                  <h1 className="text-[16px] font-[700] mr-3 text-custom-blue basis-1/2">
-                    ساعت
-                  </h1>
-                  <h1 className="text-[16px] font-[450] mr-3 text-custom-blue basis-1/2">
-                    15 - 17
-                  </h1>
-                </div>
-                <div className="h-[65px] w-80 rounded-[4px] flex flex-row items-center">
-                  <h1 className="text-[16px] font-[700] mr-3 text-custom-blue basis-1/2">
-                    وضعیت
-                  </h1>
-                  <h1 className="text-[16px] font-[450] mr-3 text-custom-blue basis-1/2">
-                    لغو شده
-                  </h1>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
       </div>
     </>
   );
-
-  function showCourseDetails(course) {
-    alert(`
-      کد درس: ${course.courseCode}
-      تاریخ: ${course.date}
-      ساعت: ${course.time}
-      وضعیت: ${course.isActive ? "فعال" : "لغو شده"}
-    `);
-  }
 }
 export default Result;

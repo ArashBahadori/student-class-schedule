@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import React from "react";
 import Calendar from "../components/Calender";
 import axios from "axios";
+import Loading from "../components/Loading";
 
 function Home({ fadeIn }) {
   const icons = {
@@ -15,6 +16,7 @@ function Home({ fadeIn }) {
   };
 
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [popupType, setPopupType] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -52,13 +54,15 @@ function Home({ fadeIn }) {
     return selectedItemsToSend;
   };
   const handleSearch = async () => {
-    const newSelected = selectedItems;
+    const newSelected = { ...selectedItems };
     newSelected.university = selectedItems.uni;
     newSelected.courseName = selectedItems.course;
     newSelected.courseProf = selectedItems.professor;
     delete newSelected.uni;
     delete newSelected.course;
     delete newSelected.professor;
+
+    // const selected = handleSelectedItems();
 
     let test = "";
     for (let key in newSelected) {
@@ -73,16 +77,19 @@ function Home({ fadeIn }) {
       test += query + "&";
     }
 
-    const selected = handleSelectedItems();
+    // const query = new URLSearchParams();
+    // console.log({query});
 
-    const query = new URLSearchParams();
-    Object.entries(selected).forEach(([key, values]) => {
-      values.forEach((val) => query.append(key, val));
-    });
+    // Object.entries(selected).forEach(([key, values]) => {
+    //   values.forEach((val) => query.append(key, val));
+    // });
+    // console.log({query});
 
     try {
+      setIsLoading(true);
       const response = await axios.get(`/api/home?${test.toString()}`);
-      navigate("/result", { state: { filteredData: response.data }});
+      setIsLoading(false);
+      navigate("/result", { state: { filteredData: response.data } });
     } catch (error) {
       console.error("Error sending filters:", error);
     }
@@ -110,6 +117,7 @@ function Home({ fadeIn }) {
       setPopupType(null);
     }
   };
+  if (isLoading) return <Loading />;
   return (
     <div
       className={`bg-bg-color w-full h-screen transition-opacity duration-400 ${
