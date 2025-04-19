@@ -25,6 +25,7 @@ function Home({ fadeIn }) {
     major: [],
     course: [],
     professor: [],
+    date: []
   });
   const [data, setData] = useState({
     uni: [],
@@ -38,21 +39,20 @@ function Home({ fadeIn }) {
     course: "نام درس",
     professor: "نام استاد",
   };
-  const handleSelectedItems = () => {
-    const selectedItemsToSend = {};
-    Object.keys(selectedItems).forEach((item) => {
-      if (selectedItems[item].length == 0) {
-        const error = setTimeout(() => {
-          setError("پر کردن فیلد ها الزامی است");
-        }, 2000);
-        clearTimeout(error);
-      }
-      if (selectedItems[item] && selectedItems[item].length > 0) {
-        selectedItemsToSend[item] = selectedItems[item];
-      }
-    });
-    return selectedItemsToSend;
-  };
+  // const handleSelectedItems = () => {
+  //   // const selectedItemsToSend = {};
+  //   Object.keys(selectedItems).forEach((item) => {
+  //     if (selectedItems[item].length == 0) {
+  //       setError("پر کردن فیلد ها الزامی است");
+  //       return;
+  //     }
+      
+  //     // if (selectedItems[item] && selectedItems[item].length > 0) {
+  //     //   selectedItemsToSend[item] = selectedItems[item];
+  //     // }
+  //   });
+  //   // return selectedItemsToSend;
+  // };
   const handleSearch = async () => {
     const newSelected = { ...selectedItems };
     newSelected.university = selectedItems.uni;
@@ -61,6 +61,7 @@ function Home({ fadeIn }) {
     delete newSelected.uni;
     delete newSelected.course;
     delete newSelected.professor;
+    
 
     // const selected = handleSelectedItems();
 
@@ -78,12 +79,10 @@ function Home({ fadeIn }) {
     }
 
     // const query = new URLSearchParams();
-    // console.log({query});
 
     // Object.entries(selected).forEach(([key, values]) => {
     //   values.forEach((val) => query.append(key, val));
     // });
-    // console.log({query});
 
     try {
       setIsLoading(true);
@@ -120,9 +119,9 @@ function Home({ fadeIn }) {
   if (isLoading) return <Loading />;
   return (
     <div
-      className={`bg-bg-color w-full h-screen transition-opacity duration-400 ${
-        fadeIn ? "opacity-100" : "opacity-0"
-      }`}
+    className={`bg-bg-color w-full h-screen transition-opacity duration-400 ${
+      fadeIn ? "opacity-100" : "opacity-0"
+    }`}
     >
       <div className="absolute">
         <img
@@ -153,7 +152,7 @@ function Home({ fadeIn }) {
             src="/icons/class-yar.svg"
             alt="class-yar icon"
             className="w-[42px] h-[38px]"
-          />
+            />
           <h2 className="text-custom-blue text-2xl font-bold">کلاس یار</h2>
         </div>
         <p className="text-custom-blue text-lg font-bold w-[320px] mx-auto mt-10">
@@ -164,8 +163,7 @@ function Home({ fadeIn }) {
         src="/icons/Rectangle 35.svg"
         alt="linear-gradient"
         className="mx-auto mt-10"
-      />
-
+        />
       <div>
         {Object.keys(data).map((key) => (
           <Select
