@@ -17,7 +17,6 @@ function Home({ fadeIn }) {
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [popupType, setPopupType] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedItems, setSelectedItems] = useState({
@@ -58,6 +57,7 @@ function Home({ fadeIn }) {
     newSelected.university = selectedItems.uni;
     newSelected.courseName = selectedItems.course;
     newSelected.courseProf = selectedItems.professor;
+    newSelected.date = selectedItems.date;
     delete newSelected.uni;
     delete newSelected.course;
     delete newSelected.professor;
@@ -77,6 +77,8 @@ function Home({ fadeIn }) {
       });
       test += query + "&";
     }
+    console.log({test});
+    
 
     // const query = new URLSearchParams();
 
@@ -188,7 +190,11 @@ function Home({ fadeIn }) {
               }
             }}
           >
-            <Calendar setPopup={() => setShowCalendar(false)} />
+            {/* <Calendar setPopup={() => setShowCalendar(false)} /> */}
+            <Calendar 
+              setPopup = {() => setShowCalendar(false)}
+              onSelect= {(dates) => setSelectedItems(prev => ({...prev, date:dates}))}
+            />
           </div>
         )}
       </div>

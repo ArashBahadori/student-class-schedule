@@ -65,6 +65,11 @@ const Calendar = (props) => {
       : newSelection.add(timestamp);
     setSelectedDates(newSelection);
   };
+  const handleConfirm = () => {
+    const formatedDates = Array.from(selectedDates).map(timestamp => moment(timestamp).format('jYYYY/jMM/jDD'));
+    props.onSelect(formatedDates);
+    props.setPopup(false)
+  }
 
   return (
     <div className="max-w-2xl mt-10 mx-auto p-4 font-sans bg-custom-white w-[257px] h-[346px] rounded-lg">
@@ -129,7 +134,7 @@ const Calendar = (props) => {
         )}
         <div className="fixed mr-40 mt-53">
           <button
-            onClick={() => props.setPopup(false)}
+            onClick={handleConfirm}
             className="  cursor-pointer bg-custom-white shadow-sm w-[64px] h-[25px] shadow-custom-blue text-custom-blue text-xs rounded-md "
           >
             تایید
